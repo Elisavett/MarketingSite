@@ -1,0 +1,8 @@
+﻿@model IEnumerable<MarketingSite.Models.Data.Request>
+
+    <ol>
+        @foreach (var item in Model)
+        {
+            <li>@item.Name</li>
+        }
+    </ol>

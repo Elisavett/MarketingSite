@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MarketingSite.Models.Data;
+using MarketingSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,18 +17,37 @@ namespace MarketingSite.Controllers
         {
             db = context;
         }
-        public IActionResult RequestList()
+        public IActionResult RequestList(int page = 1)
         {
-            return View(db.Requests.Include(r => r.Application).ToList());
+            var requests = db.Requests.Include(r => r.Application).ToList();
+
+            //Проверка первой и последней страницы
+            Page.CheckPage(ref page, requests.Count);
+
+            //Текущая страница для пагинации
+            ViewBag.page = page;
+            return View(requests.Skip((page - 1) * 10).Take(10));
         }
-        public IActionResult ApplicationList()
+        public IActionResult ApplicationList(int page = 1)
         {
-            return View(db.Applications.Include(a => a.Requests).ToList());
+            var applications = db.Applications.Include(a => a.Requests).ToList();
+
+            // Проверка первой и последней страницы
+            Page.CheckPage(ref page, applications.Count);
+
+            //Текущая страница для пагинации
+            ViewBag.page = page;
+
+            return View(applications.Skip((page - 1) * 10).Take(10));
         }
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
             int applicationId = db.Requests.Single(r => r.Id == id).ApplicationId;
+
+            //Выпадающий список с приложениями (отображается название, идентификатор - как передаваемое формой значение),
+            //выбранное значение - текущее приложение
             ViewBag.ApplicationId = new SelectList(db.Applications.ToList(), "Id", "Name", applicationId);
+
             return View(db.Requests.Find(id));
         }
         [HttpPost]

@@ -66,6 +66,14 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
+<script>
+    document.getElementsByTagName("form")[0].addEventListener("submit", function (event)
+    {
+        let errorMessage = "";
+        let email = document.getElementById("email").value;
+        //let nameList = email.split('');
+        let date = document.getElementById("date").value;
+    }, false)
+</script>
 
 

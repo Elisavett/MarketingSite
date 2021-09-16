@@ -40,7 +40,7 @@ namespace MarketingSite
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Request}/{action=RequestList}");
+                    pattern: "{controller=Site}/{action=RequestList}");
             });
         }
     }

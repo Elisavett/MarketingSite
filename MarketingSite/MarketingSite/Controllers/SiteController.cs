@@ -12,7 +12,7 @@ namespace MarketingSite.Controllers
 {
     public class SiteController : Controller
     {
-        private AppDbContext db;
+        private readonly AppDbContext db;
         public SiteController(AppDbContext context)
         {
             db = context;
@@ -51,11 +51,11 @@ namespace MarketingSite.Controllers
             return View(db.Requests.Find(id));
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind("Id,Name,Description,Email,EndOfDevelopment,ApplicationId")] Request request)
         {
             if (ModelState.IsValid)
             {
+                //Обновление заявки и сохранение изменений
                 db.Update(request);
                 db.SaveChanges();
                 return RedirectToAction("RequestList");
@@ -64,19 +64,21 @@ namespace MarketingSite.Controllers
         }
         public IActionResult Create()
         {
+            //Выпадающий список с приложениями (отображается название, идентификатор - как передаваемое формой значение),
             ViewBag.ApplicationId = new SelectList(db.Applications.ToList(), "Id", "Name");
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Name,Description,Email,EndOfDevelopment,ApplicationId")] Request request)
         {
             if (ModelState.IsValid)
             {
+                //Добавление заявки и сохранение изменений
                 db.Add(request);
                 db.SaveChanges();
                 return RedirectToAction("RequestList");
             }
+            //Выпадающий список с приложениями (отображается название, идентификатор - как передаваемое формой значение),
             ViewBag.ApplicationId = new SelectList(db.Applications.ToList(), "Id", "Name");
             return View(request);
         }

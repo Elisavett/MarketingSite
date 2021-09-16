@@ -7,6 +7,7 @@ namespace MarketingSite.Models
 {
     public class Page
     {
+        //Пагинация. Проверка начальной и конечной страницы
         public static void CheckPage(ref int page, int count)
         {
             if (page == 0) page = 1;

@@ -32,7 +32,7 @@ namespace MarketingSite.Models.Data
         [Required]
         [Display(Name = "Дата окончания разработки")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = false)]
         public DateTime EndOfDevelopment { get; set; }
         [Display(Name = "Приложение")]
         public int ApplicationId { get; set; }

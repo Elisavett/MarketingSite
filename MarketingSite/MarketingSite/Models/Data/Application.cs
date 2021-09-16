@@ -18,6 +18,7 @@ namespace MarketingSite.Models.Data
         [Display(Name = "Название")]
         public string Name { get; set; }
 
+        [Display(Name = "Заявки")]
         public ICollection<Request> Requests { get; set; }
     }
 }
